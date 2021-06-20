@@ -9,6 +9,10 @@ public class Game : MonoBehaviour
 
     Cell[,] grid = new Cell[SCREEN_WIDTH, SCREEN_HEIGHT];
 
+    [SerializeField] double Rand = 75f;
+    [SerializeField] double TimeScale = 0.5f;
+    private double delay = 0f;
+
     private void Start()
     {
         PlaceCells();
@@ -16,7 +20,23 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
+        delay += Time.deltaTime;
+        if (!CheckDelay()) return;
         CountNeighbors();
+        PopulationControl();
+    }
+
+    private bool CheckDelay()
+    {
+        if (delay >= TimeScale)
+        {
+            delay -= TimeScale;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void PlaceCells()
@@ -60,11 +80,40 @@ public class Game : MonoBehaviour
         }
     }
 
+    void PopulationControl()
+    {
+        for (int y = 0; y < SCREEN_HEIGHT; y++)
+        {
+            for (int x = 0; x < SCREEN_WIDTH; x++)
+            {
+                // - 규칙
+                // 2 개 또는 3 개의 살아있는 이웃이있는 살아있는 세포는 살아남습니다.
+                // 3 개의 살아있는 이웃이있는 죽은 세포는 살아있는 세포가됩니다.
+                // 다른 모든 살아있는 세포는 다음 세대에 죽습니다. 마찬가지로 다른 모든 죽은 세포는 죽은 상태로 유지됩니다.
+
+                if (grid[x, y].isAlive)
+                {
+                    if(grid[x, y].numNeighbors != 2 && grid[x, y].numNeighbors != 3)
+                    {
+                        grid[x, y].SetAlive(false);
+                    }
+                }
+                else
+                {
+                    if(grid[x, y].numNeighbors == 3)
+                    {
+                        grid[x, y].SetAlive(true);
+                    }
+                }
+            }
+        }
+    }
+
     private bool RandomAliveCell()
     {
         int rand = UnityEngine.Random.Range(0, 100);
 
-        if(rand > 75)
+        if(rand > Rand)
         {
             return true;
         }
