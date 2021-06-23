@@ -5,11 +5,17 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
     public bool isAlive = false;
+    public bool isPreivew = false;
     public int numNeighbors = 0;
 
     public void SetAlive(bool alive)
     {
         isAlive = alive;
+
+        if (isPreivew)
+        {
+            return;
+        }
 
         if (alive)
         {
@@ -19,5 +25,25 @@ public class Cell : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().enabled = false;
         }
+    }
+
+    public void SetPreivew(bool value)
+    {
+        isPreivew = value;
+
+        if (isPreivew)
+        {
+            GetComponent<SpriteRenderer>().enabled = true;
+        }
+        else
+        {
+            SetAlive(isAlive);
+        }
+    }
+
+
+    private void OnMouseUp()
+    {
+        RuleManager.Instance.BuildInMap((int)transform.position.x, (int)transform.position.y);
     }
 }
