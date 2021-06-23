@@ -48,7 +48,6 @@ public class Game : MonoBehaviour
                 Cell cell = Instantiate(Resources.Load("Prefabs/Cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
                 grid[x, y] = cell;
                 grid[x, y].SetAlive(RandomAliveCell());
-
             }
         }
     }
