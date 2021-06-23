@@ -25,7 +25,7 @@ public class BuildManager : MonoBehaviour
 
     [SerializeField] private BuildData[] buildPrototype; // all
     [SerializeField] private Image[] buttonImages;
-    private BuildData[] buildDatas; // 0 ~ 4
+    public BuildData[] buildDatas; // 0 ~ 4
     public int currentIndx = 0;
 
     public bool Init()
@@ -46,8 +46,12 @@ public class BuildManager : MonoBehaviour
         currentIndx = value;
     }
 
-    public BuildData GetCurrentData()
+    public BuildData UseCurrentData()
     {
-        return buildDatas[currentIndx];
+        BuildData data = buildDatas[currentIndx];
+        buildDatas[currentIndx] = buildPrototype[Random.Range(0, buildPrototype.Length)];
+        buttonImages[currentIndx].sprite = buildDatas[currentIndx].dataSprite;
+
+        return data;
     }
 }

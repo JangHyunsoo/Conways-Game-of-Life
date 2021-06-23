@@ -24,11 +24,14 @@ public class RuleManager : MonoBehaviour
 
     private int width = 64;  // 1024 pixel
     private int height = 48; // 768 pixel
+    private int bottom = 10;
     private Cell[,] grid;
 
     [SerializeField] float Rand = 75f;
-    [SerializeField] float MoveTerm = 0.1f;
-    float delay = 0f;
+    [SerializeField] float StampTerm = 1f;
+    [SerializeField] int StageTerm = 5;
+    float stampDelay = 0f;
+    int stageDelay = 5;
 
     public bool Init()
     {
@@ -38,7 +41,12 @@ public class RuleManager : MonoBehaviour
 
     public void OnUpdate()
     {
-        delay += GameManager.Instance.DeltaTime;
+        if(StageTerm == stageDelay)
+        {
+            return;
+        }
+
+        stampDelay += GameManager.Instance.DeltaTime;
         if (!CheckDelay()) return;
         CountNeighbors();
         PopulationControl();
@@ -46,9 +54,11 @@ public class RuleManager : MonoBehaviour
 
     private bool CheckDelay()
     {
-        if (delay >= MoveTerm)
+        
+        if (stampDelay >= StampTerm)
         {
-            delay -= MoveTerm;
+            stageDelay++;
+            stampDelay -= StampTerm;
             return true;
         }
         else
@@ -59,14 +69,14 @@ public class RuleManager : MonoBehaviour
 
     public void PlaceCells(Transform holder)
     {
-        for (int y = 0; y < height; y++)
+        for (int y = bottom; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
                 Cell cell = Instantiate(Resources.Load("Prefabs/Cell", typeof(Cell)), new Vector2(x, y), Quaternion.identity) as Cell;
                 cell.transform.SetParent(holder);
                 grid[x, y] = cell;
-                grid[x, y].SetAlive(RandomAliveCell());
+                grid[x, y].SetAlive(false);
             }
         }
     }
@@ -76,7 +86,7 @@ public class RuleManager : MonoBehaviour
 
     private void CountNeighbors()
     {
-        for (int y = 0; y < height; y++)
+        for (int y = bottom; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
@@ -100,12 +110,12 @@ public class RuleManager : MonoBehaviour
 
     bool IsRangeInMap(int x, int y)
     {
-        return y < height && y >= 0 && x < width && x >= 0;
+        return y < height && y >= bottom && x < width && x >= 0;
     }
 
     void PopulationControl()
     {
-        for (int y = 0; y < height; y++)
+        for (int y = bottom; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
@@ -143,7 +153,7 @@ public class RuleManager : MonoBehaviour
     {
         if (!IsRangeInMap(x, y)) return;
 
-        BuildData data = BuildManager.Instance.GetCurrentData();
+        BuildData data = BuildManager.Instance.UseCurrentData();
 
         foreach (Vector2 iter in data.dataValue)
         {
@@ -152,6 +162,8 @@ public class RuleManager : MonoBehaviour
                 grid[x + (int)iter.x, y + (int)iter.y].SetAlive(true);
             }
         }
+
+        stageDelay = 0;
     }
 }
 

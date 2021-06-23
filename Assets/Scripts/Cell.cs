@@ -6,6 +6,7 @@ public class Cell : MonoBehaviour
 {
     public bool isAlive = false;
     public bool isPreivew = false;
+    public TEAM team = TEAM.BLUE;
     public int numNeighbors = 0;
 
     public void SetAlive(bool alive)
