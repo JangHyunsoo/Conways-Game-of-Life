@@ -10,13 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81af4cbed3843f342bc732b0d38fe33b, type: 3}
-  m_Name: Glider
+  m_Name: node2
   m_EditorClassIdentifier: 
-  dataName: Glider
+  dataName: 
   dataValue:
-  - {x: 0, y: 1}
-  - {x: 0, y: 2}
-  - {x: 1, y: 0}
-  - {x: 1, y: 2}
-  - {x: 2, y: 2}
-  dataSprite: {fileID: 21300000, guid: 1b271186c6678e14f972f75ed15479bc, type: 3}
+  - {x: 0, y: 0}
+  - {x: 0, y: -1}
+  dataSprite: {fileID: 21300000, guid: c349040a0e28517429f89da810bf3d64, type: 3}

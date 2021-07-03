@@ -155,8 +155,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rand: 75
-  StampTerm: 0.5
-  StageTerm: 1
+  StampTerm: 0.1
+  StageTerm: 100
 --- !u!4 &280503670
 Transform:
   m_ObjectHideFlags: 0
@@ -198,9 +198,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildPrototype:
-  - {fileID: 11400000, guid: 9c702d814b974e149bab62d0833fe166, type: 2}
   - {fileID: 11400000, guid: 183803c4ad97ede499064c3077193fd2, type: 2}
+  - {fileID: 11400000, guid: c308bdf587f1fa644bafff9f4bef3170, type: 2}
+  - {fileID: 11400000, guid: 9c702d814b974e149bab62d0833fe166, type: 2}
+  - {fileID: 11400000, guid: 01b05eef436fd3243a9d0632b1adeda5, type: 2}
+  - {fileID: 11400000, guid: 496505479a2f7eb468364f35f4505303, type: 2}
+  - {fileID: 11400000, guid: cd39cbddc067c8c47a08469d50592b61, type: 2}
+  - {fileID: 11400000, guid: 9d49e6127336e4249bc202b6973da7b7, type: 2}
+  - {fileID: 11400000, guid: 23edc347535aedd4fafec68102fca6df, type: 2}
   - {fileID: 11400000, guid: fafee705b77385a47be4d1bb0e7b1fd6, type: 2}
+  - {fileID: 11400000, guid: 8c6116ac6a1287047b6f9a61f6289bd6, type: 2}
+  - {fileID: 11400000, guid: a927a8f2deae77c458cbc7942663c08e, type: 2}
   buttonImages:
   - {fileID: 1070790159}
   - {fileID: 995628386}
