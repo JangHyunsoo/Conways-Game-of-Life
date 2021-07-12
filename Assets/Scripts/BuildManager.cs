@@ -27,17 +27,11 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private Image[] buttonImages;
     public BuildData[] buildDatas; // 0 ~ 4
     public int currentIndx = 0;
+    public int BlockRot = 0;
 
     public bool Init()
     {
-        buildDatas = new BuildData[buttonImages.Length];
-
-        for (int i = 0; i < buttonImages.Length; i++)
-        {
-            buildDatas[i] = buildPrototype[Random.Range(0, buildPrototype.Length)];
-            buttonImages[i].sprite = buildDatas[i].dataSprite;
-        }
-
+        buildDatas = new BuildData[currentIndx + BlockRot];
         return true;
     }
 
@@ -48,10 +42,22 @@ public class BuildManager : MonoBehaviour
 
     public BuildData UseCurrentData()
     {
-        BuildData data = buildDatas[currentIndx];
-        buildDatas[currentIndx] = buildPrototype[Random.Range(0, buildPrototype.Length)];
-        buttonImages[currentIndx].sprite = buildDatas[currentIndx].dataSprite;
-
+        BuildData data = buildPrototype[currentIndx + BlockRot];
+        buttonImages[currentIndx / 4].sprite = buildPrototype[currentIndx].dataSprite;
         return data;
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) currentIndx = 0 * 4;
+        if (Input.GetKeyDown(KeyCode.Alpha2)) currentIndx = 1 * 4;
+        if (Input.GetKeyDown(KeyCode.Alpha3)) currentIndx = 2 * 4;
+        if (Input.GetKeyDown(KeyCode.Alpha4)) currentIndx = 3 * 4;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            BlockRot = (BlockRot + 1) % 4;
+            buttonImages[currentIndx / 4].sprite = buildPrototype[currentIndx + BlockRot].dataSprite;
+        }
     }
 }
